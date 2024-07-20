@@ -1,7 +1,7 @@
 [gd_scene load_steps=7 format=3 uid="uid://cl80073qqmbk6"]
 
 [ext_resource type="PackedScene" uid="uid://c0y0177mo13xy" path="res://Scenes/VikingPlayerPlatformer.tscn" id="2_pe836"]
-[ext_resource type="Texture2D" uid="uid://dye4tc3hgwxjt" path="res://Assets/Ice and snow tileset-Sheet-Sheet.png" id="2_y3wv5"]
+[ext_resource type="Texture2D" uid="uid://dye4tc3hgwxjt" path="res://Assets/VikingAssets/Ice and snow tileset-Sheet-Sheet.png" id="2_y3wv5"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_w4usp"]
 atlas = ExtResource("2_y3wv5")

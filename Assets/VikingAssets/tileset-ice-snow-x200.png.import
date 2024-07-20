@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dye4tc3hgwxjt"
-path="res://.godot/imported/Ice and snow tileset-Sheet-Sheet.png-d4e5e4cbf6d7d15cc65309ce5b895f1c.ctex"
+uid="uid://b2ubja676gicr"
+path="res://.godot/imported/tileset-ice-snow-x200.png-3d304f02733a542d787856a478164648.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://Assets/Ice and snow tileset-Sheet-Sheet.png"
-dest_files=["res://.godot/imported/Ice and snow tileset-Sheet-Sheet.png-d4e5e4cbf6d7d15cc65309ce5b895f1c.ctex"]
+source_file="res://Assets/VikingAssets/tileset-ice-snow-x200.png"
+dest_files=["res://.godot/imported/tileset-ice-snow-x200.png-3d304f02733a542d787856a478164648.ctex"]
 
 [params]
 

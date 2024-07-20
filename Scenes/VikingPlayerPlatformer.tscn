@@ -68,7 +68,7 @@ animations = [{
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_w4876"]
 size = Vector2(19, 26)
 
-[node name="VikingPlayer" type="CharacterBody2D"]
+[node name="VikingPlayerPlatformer" type="CharacterBody2D"]
 script = ExtResource("1_v3tlp")
 
 [node name="Animations" type="AnimatedSprite2D" parent="."]
