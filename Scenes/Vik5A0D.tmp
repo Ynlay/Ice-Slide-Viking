@@ -1,24 +1,24 @@
 [gd_scene load_steps=27 format=3 uid="uid://dlo34b387r23p"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_wu8x5"]
-[ext_resource type="Texture2D" uid="uid://1qubmwwt7nb6" path="res://Assets/VikingAssets/viking-attacks-v2 (1).png" id="2_h4pl3"]
+[ext_resource type="Texture2D" uid="uid://dp5uftkx6p34d" path="res://Assets/VikingAssets/viking-attacks.png" id="2_r5e7j"]
 [ext_resource type="Texture2D" uid="uid://q5v13t5psw4a" path="res://Assets/VikingAssets/viking-anims.png" id="3_u3hie"]
 [ext_resource type="Texture2D" uid="uid://dc6n5tgsx3rav" path="res://icon.svg" id="4_gymja"]
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mi6pd"]
-atlas = ExtResource("2_h4pl3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_e3kxe"]
+atlas = ExtResource("2_r5e7j")
 region = Rect2(0, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_mwtjr"]
-atlas = ExtResource("2_h4pl3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_ecbai"]
+atlas = ExtResource("2_r5e7j")
 region = Rect2(48, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_0m5c8"]
-atlas = ExtResource("2_h4pl3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_mo317"]
+atlas = ExtResource("2_r5e7j")
 region = Rect2(96, 0, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_b0pfl"]
-atlas = ExtResource("2_h4pl3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_7jwbk"]
+atlas = ExtResource("2_r5e7j")
 region = Rect2(144, 0, 48, 48)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_gwhwg"]
@@ -57,36 +57,36 @@ region = Rect2(96, 48, 48, 48)
 atlas = ExtResource("3_u3hie")
 region = Rect2(144, 48, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_yk1qe"]
-atlas = ExtResource("2_h4pl3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_mcivw"]
+atlas = ExtResource("2_r5e7j")
+region = Rect2(192, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_7blqy"]
+atlas = ExtResource("2_r5e7j")
+region = Rect2(240, 0, 48, 48)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_02a63"]
+atlas = ExtResource("2_r5e7j")
 region = Rect2(0, 48, 48, 48)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ecs54"]
-atlas = ExtResource("2_h4pl3")
+[sub_resource type="AtlasTexture" id="AtlasTexture_pkmyw"]
+atlas = ExtResource("2_r5e7j")
 region = Rect2(48, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_qhse4"]
-atlas = ExtResource("2_h4pl3")
-region = Rect2(96, 48, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n6w6m"]
-atlas = ExtResource("2_h4pl3")
-region = Rect2(144, 48, 48, 48)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_wu35t"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mi6pd")
+"texture": SubResource("AtlasTexture_e3kxe")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_mwtjr")
+"texture": SubResource("AtlasTexture_ecbai")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_0m5c8")
+"texture": SubResource("AtlasTexture_mo317")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_b0pfl")
+"texture": SubResource("AtlasTexture_7jwbk")
 }],
 "loop": false,
 "name": &"AxeStrike",
@@ -131,16 +131,16 @@ animations = [{
 }, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_yk1qe")
+"texture": SubResource("AtlasTexture_mcivw")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ecs54")
+"texture": SubResource("AtlasTexture_7blqy")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_qhse4")
+"texture": SubResource("AtlasTexture_02a63")
 }, {
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_n6w6m")
+"texture": SubResource("AtlasTexture_pkmyw")
 }],
 "loop": true,
 "name": &"Whirlwind",
@@ -179,21 +179,20 @@ corner_radius_top_right = 1
 corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 
-[node name="VikingPlayer" type="CharacterBody2D" groups=["Player"]]
+[node name="VikingPlayer" type="CharacterBody2D" node_paths=PackedStringArray("AttackFacing", "HealthBar") groups=["Player"]]
 script = ExtResource("1_wu8x5")
 Speed = 300
 Acceleration = 200
 Deceleration = 200
 AxeStrikeCD = 1.0
 WhirlwindDuration = 1.5
-DamageInvincibilityTimerWhirlwind = 0.25
+AttackFacing = NodePath("AttackFacing")
+HealthBar = NodePath("CanvasLayer/Control/Healthbar")
 
 [node name="Animations" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wu35t")
 animation = &"AxeStrike"
 autoplay = "Idle"
-frame = 3
-frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 position = Vector2(-0.5, 6)
@@ -208,22 +207,22 @@ position_smoothing_enabled = true
 position = Vector2(25, 0)
 
 [node name="Sprite2D" type="Sprite2D" parent="AttackFacing"]
-visible = false
 scale = Vector2(0.176556, 0.176556)
 texture = ExtResource("4_gymja")
 
 [node name="AttackArea" type="Area2D" parent="AttackFacing"]
-position = Vector2(-2, 0)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="AttackFacing/AttackArea"]
 position = Vector2(-0.5, 6)
 shape = SubResource("RectangleShape2D_fdmm4")
 
-[node name="Control" type="Control" parent="."]
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="Control" type="Control" parent="CanvasLayer"]
 layout_mode = 3
 anchors_preset = 0
 
-[node name="Healthbar" type="ProgressBar" parent="Control"]
+[node name="Healthbar" type="ProgressBar" parent="CanvasLayer/Control"]
 layout_mode = 0
 offset_left = -12.0
 offset_top = -17.0
