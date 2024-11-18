@@ -12,6 +12,7 @@ func DisplayNumber(value, position, is_critical):
 		color = "#B22"
 	if value == 0: 
 		color = "#FFF8"
+		number.text = "BLOCK"
 	
 	number.label_settings.font_color = color 
 	number.label_settings.font_size = 18

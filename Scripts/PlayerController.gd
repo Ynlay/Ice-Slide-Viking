@@ -4,62 +4,31 @@ extends CharacterBody2D
 @export var Speed = 400
 @export var Acceleration = 300
 @export var Deceleration = 300
+@export var VelocityBeforeFlip = 10.0
+
+@export_category("Controls")
 @export var AltKeys = false 
 
-@export_category("Attack")
-@export var AxeStrikeDuration = 1.0
-@export var AxeStrikeCD = 2.0 
-@onready var axeCooling = false 
-@export var WhirlwindDuration = 2.0
-@export var WhirlwindCD = 2.0
-@onready var whirlCooling = false 
-@onready var AttackFacing = $AttackFacing
-@onready var lastAttack = "none"
-
-@export_category("Health")
-@onready var HealthBar = $Control/Healthbar
-@export var DamageInvincibilityTimerAxeStrike = 1.0
-@export var DamageInvincibilityTimerWhirlwind = 0.5
-@onready var recentlyDamaged = false 
-
-@onready var attacking = false
-@onready var body_in_area = false
-@onready var attackingBody
-@onready var attackDue = 0 
 @onready var anim = $Animations
+@onready var isAttacking = false 
+@onready var combatController = $CombatController
 
 var last_direction = Vector2.ZERO
+var flipped_horizontal = false 
+var runeAcquired = false 
 
+func _ready(): 
+	platform_floor_layers = false
+	await get_tree().create_timer(1.0).timeout
+	if AltKeys: 
+		combatController.AltKeys = true
 func _physics_process(delta):
 	HandleMovement(delta)
-	HandleAxeStrike()
-	HandleWhirlwind()
-	HandleAttack()
 	
 	if Input.is_action_just_pressed("escape"):
 		get_tree().quit()
 	
 	move_and_slide()
-
-func HandleAttack(): 
-	if not attacking: return 
-	if attackingBody == null: return
-	if attackingBody.is_in_group("Player"): 
-		attackingBody.HandleDamage(attackDue, lastAttack)
-	
-
-func HandleDamage(damageReceived, strikeType): 
-	if damageReceived < 0: return 
-	if recentlyDamaged: return
-	if strikeType == "none": return
-	DamageNumbers.DisplayNumber(damageReceived, global_position, false)
-	HealthBar.value = HealthBar.value - damageReceived
-	recentlyDamaged = true
-	if strikeType == "Whirlwind": 
-		await get_tree().create_timer(DamageInvincibilityTimerWhirlwind).timeout
-	else: 
-		await get_tree().create_timer(DamageInvincibilityTimerAxeStrike).timeout
-	recentlyDamaged = false
 	
 func HandleMovement(delta): 
 	# Get Direction
@@ -74,75 +43,77 @@ func HandleMovement(delta):
 	
 	# Acceleration / Deceleration
 	if input_direction != Vector2.ZERO: 
-		velocity = velocity.move_toward(input_direction * Speed, Acceleration*delta)
+		velocity = velocity.move_toward(input_direction * Speed, (Acceleration)*delta)
 	else:
-		velocity = velocity.move_toward(Vector2.ZERO, Deceleration * delta)
+		velocity = velocity.move_toward(Vector2.ZERO, (Deceleration*0.5) * delta)
 		
 	# Flip Sprite
-	if last_direction == Vector2.LEFT or (velocity.x < -50): 
-		anim.flip_h = true
-		AttackFacing.position = Vector2(-30, 0)
-	elif last_direction == Vector2.RIGHT or (velocity.x > 50): 
+	#if last_direction == Vector2.LEFT or (velocity.x < -50): 
+		#anim.flip_h = true
+	#elif last_direction == Vector2.RIGHT or (velocity.x > 50): 
+		#anim.flip_h = false
+	if velocity.x < -VelocityBeforeFlip: 
+		anim.flip_h = true 
+		flipped_horizontal = true 
+	elif velocity.x > VelocityBeforeFlip: 
 		anim.flip_h = false
-		AttackFacing.position = Vector2(30, 0)
+		flipped_horizontal = false 
 		
 	# Animation handling 
-	if attacking: return
+	if isAttacking: return
 	if velocity != Vector2.ZERO: 
 		anim.play("Slide")
 	else: 
 		anim.play("Idle")
-		attackDue = 0
 
-func HandleWhirlwind(): 
-	if whirlCooling: return
-	if attacking: return
-	var inputActionPressed
-	if AltKeys: 
-		inputActionPressed = Input.is_action_just_pressed("alt_key_two")
-	else: 
-		inputActionPressed = Input.is_action_just_pressed("key_two")
-	if inputActionPressed: 
-		lastAttack = "Whirlwind"
-		anim.play("Whirlwind")
-		attackDue = 5.0
-		attacking = true
-		await get_tree().create_timer(WhirlwindDuration).timeout
-		attacking = false
-		whirlCooling = true
-		await get_tree().create_timer(WhirlwindCD).timeout
-		whirlCooling = false
-		
-func HandleAxeStrike(): 
-	if axeCooling: return
-	if attacking: return
-	var inputActionPressed
-	if AltKeys: 
-		inputActionPressed = Input.is_action_just_pressed("alt_key_one")
-	else: 
-		inputActionPressed = Input.is_action_just_pressed("key_one")
-	if inputActionPressed: 
-		lastAttack = "AxeStrike"
-		anim.play("AxeStrike")
-		attackDue = 20
-		attacking = true
-		await get_tree().create_timer(AxeStrikeDuration).timeout
-		attacking=false
-		axeCooling = true
-		await get_tree().create_timer(AxeStrikeCD).timeout
-		axeCooling = false
+func SetIsAttacking(_attacking): 
+	isAttacking = _attacking
 
+# RUNES
+func SetDamageMultiplierRune(_multiplier, _duration): 
+	if runeAcquired: return
+	var pastDamage = combatController.DamageMultiplier
+	combatController.DamageMultiplier = _multiplier
+	runeAcquired = true 
+	print("DamageRuneAcquired")
+	await get_tree().create_timer(_duration).timeout
+	runeAcquired = false 
+	print("DamageRune effects fade")
+	combatController.DamageMultiplier = pastDamage
+	
+func SetSpeedRune(_multiplier, _duration): 
+	if runeAcquired: return
+	var pastSpeed = Speed
+	Speed = Speed * _multiplier
+	runeAcquired = true
+	await get_tree().create_timer(_duration).timeout
+	runeAcquired = false 
+	Speed = pastSpeed
+	
+func SetRegenRune(_healAmount, _duration): 
+	if runeAcquired: return 
+	var healTick = _healAmount/_duration
+	var elapsed_time = 0.0  # Track how much time has passed
+	runeAcquired = true
+	while elapsed_time < _duration:
+		# Heal the player
+		combatController.HealthBar.value = combatController.HealthBar.value + healTick
+		elapsed_time += 1.0   
+		# Wait for 1 second before the next tick 
+		await get_tree().create_timer(1.0).timeout
+	
+	runeAcquired = false 
 
+func SetShieldRune(_value, _duration): 
+	if runeAcquired: return 
+	runeAcquired = true 
+	combatController.invincible = true 
+	await get_tree().create_timer(_duration).timeout
+	runeAcquired = false 
+	combatController.invincible = false 
 
-
-func _on_attack_area_body_entered(body: Node2D) -> void:
-	if body.is_in_group("Player"): 
-		body_in_area = true
-		attackingBody = body
-
-
-
-func _on_attack_area_body_exited(body: Node2D) -> void:
-	if body.is_in_group("Player"): 
-		body_in_area = false
-		attackingBody = null
+func Pushback(block_position, force): 
+	var direction = (global_transform.origin - block_position).normalized()
+	var push_vector = direction * force
+	velocity = push_vector 
+	move_and_slide()

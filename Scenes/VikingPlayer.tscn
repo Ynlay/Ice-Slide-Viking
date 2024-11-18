@@ -1,9 +1,16 @@
-[gd_scene load_steps=27 format=3 uid="uid://dlo34b387r23p"]
+[gd_scene load_steps=35 format=3 uid="uid://dlo34b387r23p"]
 
 [ext_resource type="Script" path="res://Scripts/PlayerController.gd" id="1_wu8x5"]
 [ext_resource type="Texture2D" uid="uid://1qubmwwt7nb6" path="res://Assets/VikingAssets/viking-attacks-v2 (1).png" id="2_h4pl3"]
 [ext_resource type="Texture2D" uid="uid://q5v13t5psw4a" path="res://Assets/VikingAssets/viking-anims.png" id="3_u3hie"]
-[ext_resource type="Texture2D" uid="uid://dc6n5tgsx3rav" path="res://icon.svg" id="4_gymja"]
+[ext_resource type="Script" path="res://Scripts/CombatController.gd" id="4_6h7iy"]
+[ext_resource type="AudioStream" uid="uid://b0pgtt3uqffw0" path="res://Assets/Audio/SFX9_Viking_Attack1_A.wav" id="5_klbjv"]
+[ext_resource type="Texture2D" uid="uid://dc6n5tgsx3rav" path="res://icon.svg" id="5_wswbo"]
+[ext_resource type="AudioStream" uid="uid://cuy8o3dijnede" path="res://Assets/Audio/SFX9_Viking_Attack1_B.wav" id="6_6b2ph"]
+[ext_resource type="AudioStream" uid="uid://b0cud5jsi0qq2" path="res://Assets/Audio/SFX9_Viking_Attack1_C.wav" id="7_wm2i6"]
+[ext_resource type="AudioStream" uid="uid://yxt5r1mr2b1f" path="res://Assets/Audio/SFX10_Viking_Attack2_A.wav" id="8_k5n12"]
+[ext_resource type="AudioStream" uid="uid://banpgva4i3jyh" path="res://Assets/Audio/SFX10_Viking_Attack2_B.wav" id="9_d4qox"]
+[ext_resource type="AudioStream" uid="uid://cyyjcx0ldu4ft" path="res://Assets/Audio/SFX10_Viking_Attack2_C.wav" id="10_g4uun"]
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_mi6pd"]
 atlas = ExtResource("2_h4pl3")
@@ -147,11 +154,15 @@ animations = [{
 "speed": 5.0
 }]
 
-[sub_resource type="RectangleShape2D" id="RectangleShape2D_w4876"]
-size = Vector2(27, 28)
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_mqbes"]
+radius = 5.5
+height = 24.0
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_fdmm4"]
-size = Vector2(23, 28)
+size = Vector2(14, 28)
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_pljbp"]
+radius = 35.0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hj5oa"]
 bg_color = Color(0.12549, 0.12549, 0.12549, 1)
@@ -180,13 +191,12 @@ corner_radius_bottom_right = 1
 corner_radius_bottom_left = 1
 
 [node name="VikingPlayer" type="CharacterBody2D" groups=["Player"]]
+top_level = true
+collision_mask = 7
 script = ExtResource("1_wu8x5")
 Speed = 300
 Acceleration = 200
-Deceleration = 200
-AxeStrikeCD = 1.0
-WhirlwindDuration = 1.5
-DamageInvincibilityTimerWhirlwind = 0.25
+Deceleration = 190
 
 [node name="Animations" type="AnimatedSprite2D" parent="."]
 sprite_frames = SubResource("SpriteFrames_wu35t")
@@ -196,28 +206,38 @@ frame = 3
 frame_progress = 1.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-0.5, 6)
-shape = SubResource("RectangleShape2D_w4876")
+position = Vector2(-0.5, 8)
+shape = SubResource("CapsuleShape2D_mqbes")
 
 [node name="Camera2D" type="Camera2D" parent="."]
-zoom = Vector2(2.72, 2.72)
+zoom = Vector2(2, 2)
 limit_smoothed = true
 position_smoothing_enabled = true
 
-[node name="AttackFacing" type="Node2D" parent="."]
+[node name="CombatController" type="Node2D" parent="."]
+script = ExtResource("4_6h7iy")
+AxeStrikeDamage = 20
+WhirlwindDuration = 3.0
+AxeStrikeAudio = Array[AudioStream]([ExtResource("5_klbjv"), ExtResource("6_6b2ph"), ExtResource("7_wm2i6")])
+WhirlwindAudio = Array[AudioStream]([ExtResource("8_k5n12"), ExtResource("9_d4qox"), ExtResource("10_g4uun")])
+
+[node name="AxeStrikeArea" type="Area2D" parent="CombatController"]
 position = Vector2(25, 0)
 
-[node name="Sprite2D" type="Sprite2D" parent="AttackFacing"]
-visible = false
-scale = Vector2(0.176556, 0.176556)
-texture = ExtResource("4_gymja")
-
-[node name="AttackArea" type="Area2D" parent="AttackFacing"]
-position = Vector2(-2, 0)
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="AttackFacing/AttackArea"]
-position = Vector2(-0.5, 6)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombatController/AxeStrikeArea"]
+position = Vector2(-4, 6)
 shape = SubResource("RectangleShape2D_fdmm4")
+
+[node name="Sprite2D" type="Sprite2D" parent="CombatController/AxeStrikeArea"]
+visible = false
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("5_wswbo")
+
+[node name="WhirlwindArea" type="Area2D" parent="CombatController"]
+position = Vector2(0, 4)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="CombatController/WhirlwindArea"]
+shape = SubResource("CircleShape2D_pljbp")
 
 [node name="Control" type="Control" parent="."]
 layout_mode = 3
@@ -234,5 +254,9 @@ theme_override_styles/fill = SubResource("StyleBoxFlat_spygl")
 value = 100.0
 show_percentage = false
 
-[connection signal="body_entered" from="AttackFacing/AttackArea" to="." method="_on_attack_area_body_entered"]
-[connection signal="body_exited" from="AttackFacing/AttackArea" to="." method="_on_attack_area_body_exited"]
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+
+[connection signal="body_entered" from="CombatController/AxeStrikeArea" to="CombatController" method="_on_axe_strike_area_body_entered"]
+[connection signal="body_exited" from="CombatController/AxeStrikeArea" to="CombatController" method="_on_axe_strike_area_body_exited"]
+[connection signal="body_entered" from="CombatController/WhirlwindArea" to="CombatController" method="_on_whirlwind_area_body_entered"]
+[connection signal="body_exited" from="CombatController/WhirlwindArea" to="CombatController" method="_on_whirlwind_area_body_exited"]

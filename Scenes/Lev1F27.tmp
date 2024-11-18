@@ -1,14 +1,12 @@
-[gd_scene load_steps=53 format=3 uid="uid://ddlxqb2tw3ppk"]
+[gd_scene load_steps=28 format=3 uid="uid://ddlxqb2tw3ppk"]
 
 [ext_resource type="PackedScene" uid="uid://dlo34b387r23p" path="res://Scenes/VikingPlayer.tscn" id="1_5mcxl"]
 [ext_resource type="Texture2D" uid="uid://bbg8xx2irbq7" path="res://Assets/VikingAssets/pvp-arena.png" id="3_giewk"]
 [ext_resource type="Texture2D" uid="uid://dye4tc3hgwxjt" path="res://Assets/VikingAssets/Ice and snow tileset-Sheet-Sheet.png" id="3_uhfqn"]
 [ext_resource type="Script" path="res://Scripts/Rune.gd" id="4_v0nne"]
-[ext_resource type="Texture2D" uid="uid://ca0ga0j07h1p6" path="res://Assets/Runes/rune-shield.png" id="5_frlbu"]
-[ext_resource type="PackedScene" uid="uid://daofk3dlaybyd" path="res://Scenes/Boulder.tscn" id="6_o6wb0"]
-[ext_resource type="Texture2D" uid="uid://dog6aaxsq3msa" path="res://Assets/Runes/rune-damage.png" id="6_suc06"]
-[ext_resource type="Texture2D" uid="uid://cn5yan1yvrmmo" path="res://Assets/Runes/rune-health.png" id="7_vvddu"]
-[ext_resource type="Texture2D" uid="uid://cvuw2ak64sbqk" path="res://Assets/Runes/rune-speed.png" id="8_nwyh1"]
+[ext_resource type="Texture2D" uid="uid://dc6n5tgsx3rav" path="res://icon.svg" id="5_whet8"]
+[ext_resource type="Texture2D" uid="uid://b2ubja676gicr" path="res://Assets/VikingAssets/tileset-ice-snow-x200.png" id="6_f76cq"]
+[ext_resource type="Script" path="res://Scripts/Boulder.gd" id="6_i51v2"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_qw2le"]
 size = Vector2(213, 11)
@@ -38,10 +36,10 @@ size = Vector2(22, 53.7188)
 size = Vector2(9, 75)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_0mil5"]
-size = Vector2(39, 593)
+size = Vector2(13, 593)
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_44cqu"]
-size = Vector2(43, 1027)
+size = Vector2(11.5, 1027)
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_pb2kh"]
 texture = ExtResource("3_uhfqn")
@@ -2438,217 +2436,57 @@ texture = ExtResource("3_giewk")
 sources/0 = SubResource("TileSetAtlasSource_pb2kh")
 sources/1 = SubResource("TileSetAtlasSource_p3c7u")
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_34vrj"]
-atlas = ExtResource("5_frlbu")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7gaug"]
-atlas = ExtResource("5_frlbu")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_u8tv0"]
-atlas = ExtResource("5_frlbu")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_0q2oe"]
-atlas = ExtResource("5_frlbu")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tdp0v"]
-atlas = ExtResource("5_frlbu")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_n4kud"]
-atlas = ExtResource("5_frlbu")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_pp1i8"]
-animations = [{
-"frames": [{
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_34vrj")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_7gaug")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_u8tv0")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_0q2oe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tdp0v")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_n4kud")
-}],
-"loop": true,
-"name": &"default",
-"speed": 5.0
-}]
-
 [sub_resource type="CircleShape2D" id="CircleShape2D_4g177"]
 radius = 18.1108
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_ntvx6"]
-atlas = ExtResource("6_suc06")
-region = Rect2(0, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_qlkp1"]
+atlas = ExtResource("6_f76cq")
+region = Rect2(224, 96, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_86cev"]
-atlas = ExtResource("6_suc06")
-region = Rect2(48, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_p7bek"]
+atlas = ExtResource("6_f76cq")
+region = Rect2(224, 128, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_j1ovs"]
-atlas = ExtResource("6_suc06")
-region = Rect2(96, 0, 48, 48)
+[sub_resource type="AtlasTexture" id="AtlasTexture_vdmb3"]
+atlas = ExtResource("6_f76cq")
+region = Rect2(224, 160, 32, 32)
 
-[sub_resource type="AtlasTexture" id="AtlasTexture_8fvnv"]
-atlas = ExtResource("6_suc06")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_velit"]
-atlas = ExtResource("6_suc06")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_5yee4"]
-atlas = ExtResource("6_suc06")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_hwh73"]
+[sub_resource type="SpriteFrames" id="SpriteFrames_f71ii"]
 animations = [{
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_ntvx6")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_86cev")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j1ovs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_8fvnv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_velit")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_5yee4")
+"texture": SubResource("AtlasTexture_qlkp1")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Type1",
 "speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_7rkqr"]
-atlas = ExtResource("7_vvddu")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_2qq2o"]
-atlas = ExtResource("7_vvddu")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_g5nbe"]
-atlas = ExtResource("7_vvddu")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_a58eu"]
-atlas = ExtResource("7_vvddu")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_vn7y7"]
-atlas = ExtResource("7_vvddu")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_h7hxd"]
-atlas = ExtResource("7_vvddu")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_pypf6"]
-animations = [{
+}, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_7rkqr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_2qq2o")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_g5nbe")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_a58eu")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_vn7y7")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_h7hxd")
+"texture": SubResource("AtlasTexture_p7bek")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Type2",
 "speed": 5.0
-}]
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_wliew"]
-atlas = ExtResource("8_nwyh1")
-region = Rect2(0, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_j0olv"]
-atlas = ExtResource("8_nwyh1")
-region = Rect2(48, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_ychr5"]
-atlas = ExtResource("8_nwyh1")
-region = Rect2(96, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_hj5fs"]
-atlas = ExtResource("8_nwyh1")
-region = Rect2(144, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_tpwtr"]
-atlas = ExtResource("8_nwyh1")
-region = Rect2(192, 0, 48, 48)
-
-[sub_resource type="AtlasTexture" id="AtlasTexture_f4u78"]
-atlas = ExtResource("8_nwyh1")
-region = Rect2(240, 0, 48, 48)
-
-[sub_resource type="SpriteFrames" id="SpriteFrames_kkxv3"]
-animations = [{
+}, {
 "frames": [{
 "duration": 1.0,
-"texture": SubResource("AtlasTexture_wliew")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_j0olv")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_ychr5")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_hj5fs")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_tpwtr")
-}, {
-"duration": 1.0,
-"texture": SubResource("AtlasTexture_f4u78")
+"texture": SubResource("AtlasTexture_vdmb3")
 }],
 "loop": true,
-"name": &"default",
+"name": &"Type3",
 "speed": 5.0
 }]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jw5pq"]
+radius = 21.095
 
 [node name="Level1" type="Node2D"]
 
 [node name="Pvp-arena" type="Sprite2D" parent="."]
 texture = ExtResource("3_giewk")
 
-[node name="Walls" type="StaticBody2D" parent="Pvp-arena" groups=["Wall"]]
-collision_layer = 2
-collision_mask = 5
+[node name="Walls" type="StaticBody2D" parent="Pvp-arena"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="Pvp-arena/Walls"]
 position = Vector2(401.5, 177.5)
@@ -2723,114 +2561,20 @@ position = Vector2(503.5, 220.5)
 shape = SubResource("RectangleShape2D_nohxr")
 
 [node name="CollisionShape2D4" type="CollisionShape2D" parent="Pvp-arena/Walls"]
-position = Vector2(523.5, -0.5)
+position = Vector2(510.5, -0.5)
 shape = SubResource("RectangleShape2D_0mil5")
 
 [node name="CollisionShape2D5" type="CollisionShape2D" parent="Pvp-arena/Walls"]
-position = Vector2(-529, 0)
+position = Vector2(-507, -0.5)
 shape = SubResource("RectangleShape2D_0mil5")
 
 [node name="CollisionShape2D6" type="CollisionShape2D" parent="Pvp-arena/Walls"]
-position = Vector2(1.49994, 304.5)
+position = Vector2(1.5, 288.75)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_44cqu")
 
 [node name="CollisionShape2D7" type="CollisionShape2D" parent="Pvp-arena/Walls"]
-position = Vector2(1.5, -314)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_44cqu")
-
-[node name="AreaTriggerWalls" type="Area2D" parent="Pvp-arena" groups=["Wall"]]
-collision_layer = 2
-collision_mask = 5
-
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(401.5, 177.5)
-shape = SubResource("RectangleShape2D_qw2le")
-
-[node name="CollisionShape2D2" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(399, 270.25)
-shape = SubResource("RectangleShape2D_asawk")
-
-[node name="CollisionShape2D8" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-388, -194)
-shape = SubResource("RectangleShape2D_asawk")
-
-[node name="CollisionShape2D9" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-43, -104.5)
-shape = SubResource("RectangleShape2D_6qswu")
-
-[node name="CollisionShape2D10" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(40.5, -104.5)
-shape = SubResource("RectangleShape2D_6qswu")
-
-[node name="CollisionShape2D11" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(53, -68.25)
-shape = SubResource("RectangleShape2D_uw7gb")
-
-[node name="CollisionShape2D12" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-57, -43.875)
-shape = SubResource("RectangleShape2D_p5j0i")
-
-[node name="CollisionShape2D13" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(68, -21)
-shape = SubResource("RectangleShape2D_3xnnq")
-
-[node name="CollisionShape2D14" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(85, 28)
-shape = SubResource("RectangleShape2D_3xnnq")
-
-[node name="CollisionShape2D15" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(101, 76)
-shape = SubResource("RectangleShape2D_3xnnq")
-
-[node name="CollisionShape2D16" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(88, 142)
-shape = SubResource("RectangleShape2D_3xnnq")
-
-[node name="CollisionShape2D17" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(102, 91)
-shape = SubResource("RectangleShape2D_3xnnq")
-
-[node name="CollisionShape2D18" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-26, 57)
-shape = SubResource("RectangleShape2D_3xnnq")
-
-[node name="CollisionShape2D19" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-43, 4.28125)
-shape = SubResource("RectangleShape2D_6lh8r")
-
-[node name="CollisionShape2D20" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-28, 38)
-shape = SubResource("RectangleShape2D_6lh8r")
-
-[node name="CollisionShape2D21" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-11, 101)
-shape = SubResource("RectangleShape2D_6lh8r")
-
-[node name="CollisionShape2D22" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(9, 143.141)
-shape = SubResource("RectangleShape2D_bmriu")
-
-[node name="CollisionShape2D3" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(503.5, 220.5)
-shape = SubResource("RectangleShape2D_nohxr")
-
-[node name="CollisionShape2D4" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(523.5, -0.5)
-shape = SubResource("RectangleShape2D_0mil5")
-
-[node name="CollisionShape2D5" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(-529, 0)
-shape = SubResource("RectangleShape2D_0mil5")
-
-[node name="CollisionShape2D6" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(1.49994, 304.5)
-rotation = 1.5708
-shape = SubResource("RectangleShape2D_44cqu")
-
-[node name="CollisionShape2D7" type="CollisionShape2D" parent="Pvp-arena/AreaTriggerWalls"]
-position = Vector2(1.5, -314)
+position = Vector2(1.5, -288)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_44cqu")
 
@@ -2856,84 +2600,86 @@ layer_0/tile_data = PackedInt32Array(-524277, 3080193, 12, -458741, 3080193, 13,
 
 [node name="Runes" type="Node2D" parent="Interactables"]
 
-[node name="ShieldRune" type="Node2D" parent="Interactables/Runes"]
+[node name="Rune" type="Node2D" parent="Interactables/Runes"]
 position = Vector2(265, -80)
 script = ExtResource("4_v0nne")
 Duration = 10.0
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="Interactables/Runes/ShieldRune"]
-scale = Vector2(0.791016, 0.791016)
-sprite_frames = SubResource("SpriteFrames_pp1i8")
-frame_progress = 0.247156
+[node name="Sprite2D" type="Sprite2D" parent="Interactables/Runes/Rune"]
+scale = Vector2(0.289063, 0.289063)
+texture = ExtResource("5_whet8")
 
-[node name="Area2D" type="Area2D" parent="Interactables/Runes/ShieldRune"]
+[node name="Area2D" type="Area2D" parent="Interactables/Runes/Rune"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/ShieldRune/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/Rune/Area2D"]
 shape = SubResource("CircleShape2D_4g177")
 
-[node name="DamageRune" type="Node2D" parent="Interactables/Runes"]
+[node name="Rune2" type="Node2D" parent="Interactables/Runes"]
 position = Vector2(224, 109)
 script = ExtResource("4_v0nne")
 RuneType = 2
 Duration = 10.0
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="Interactables/Runes/DamageRune"]
-scale = Vector2(0.759766, 0.759766)
-sprite_frames = SubResource("SpriteFrames_hwh73")
-frame_progress = 0.430285
+[node name="Sprite2D" type="Sprite2D" parent="Interactables/Runes/Rune2"]
+modulate = Color(1, 0, 0, 1)
+scale = Vector2(0.289063, 0.289063)
+texture = ExtResource("5_whet8")
 
-[node name="Area2D" type="Area2D" parent="Interactables/Runes/DamageRune"]
+[node name="Area2D" type="Area2D" parent="Interactables/Runes/Rune2"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/DamageRune/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/Rune2/Area2D"]
 shape = SubResource("CircleShape2D_4g177")
 
-[node name="HealthRune" type="Node2D" parent="Interactables/Runes"]
+[node name="Rune3" type="Node2D" parent="Interactables/Runes"]
 position = Vector2(-147, 151)
 script = ExtResource("4_v0nne")
 RuneType = 1
 Value = 50
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="Interactables/Runes/HealthRune"]
-scale = Vector2(0.801432, 0.801432)
-sprite_frames = SubResource("SpriteFrames_pypf6")
-frame_progress = 0.156176
+[node name="Sprite2D" type="Sprite2D" parent="Interactables/Runes/Rune3"]
+modulate = Color(0, 1, 0.521569, 1)
+scale = Vector2(0.289063, 0.289063)
+texture = ExtResource("5_whet8")
 
-[node name="Area2D" type="Area2D" parent="Interactables/Runes/HealthRune"]
+[node name="Area2D" type="Area2D" parent="Interactables/Runes/Rune3"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/HealthRune/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/Rune3/Area2D"]
 shape = SubResource("CircleShape2D_4g177")
 
-[node name="SpeedRune" type="Node2D" parent="Interactables/Runes"]
+[node name="Rune4" type="Node2D" parent="Interactables/Runes"]
+modulate = Color(1, 1, 0, 1)
 position = Vector2(-211, 23)
 script = ExtResource("4_v0nne")
 RuneType = 3
 Duration = 10.0
 
-[node name="Sprite2D" type="AnimatedSprite2D" parent="Interactables/Runes/SpeedRune"]
-scale = Vector2(0.759766, 0.759766)
-sprite_frames = SubResource("SpriteFrames_kkxv3")
-frame = 3
-frame_progress = 0.0236355
+[node name="Sprite2D" type="Sprite2D" parent="Interactables/Runes/Rune4"]
+modulate = Color(0, 1, 0.521569, 1)
+scale = Vector2(0.289063, 0.289063)
+texture = ExtResource("5_whet8")
 
-[node name="Area2D" type="Area2D" parent="Interactables/Runes/SpeedRune"]
+[node name="Area2D" type="Area2D" parent="Interactables/Runes/Rune4"]
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/SpeedRune/Area2D"]
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Runes/Rune4/Area2D"]
 shape = SubResource("CircleShape2D_4g177")
 
 [node name="Boulders" type="Node2D" parent="Interactables"]
 
-[node name="Boulder1" parent="Interactables/Boulders" instance=ExtResource("6_o6wb0")]
+[node name="Boulder" type="Node2D" parent="Interactables/Boulders" groups=["Boulder"]]
+position = Vector2(195, 30)
+script = ExtResource("6_i51v2")
 
-[node name="Boulder2" parent="Interactables/Boulders" instance=ExtResource("6_o6wb0")]
-position = Vector2(332, 104)
+[node name="Sprite2D" type="AnimatedSprite2D" parent="Interactables/Boulders/Boulder"]
+sprite_frames = SubResource("SpriteFrames_f71ii")
+animation = &"Type1"
 
-[node name="Boulder3" parent="Interactables/Boulders" instance=ExtResource("6_o6wb0")]
-position = Vector2(-243, 103)
+[node name="Area2D" type="Area2D" parent="Interactables/Boulders/Boulder"]
 
-[node name="Boulder4" parent="Interactables/Boulders" instance=ExtResource("6_o6wb0")]
-position = Vector2(-72, -202)
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Interactables/Boulders/Boulder/Area2D"]
+shape = SubResource("CircleShape2D_jw5pq")
 
-[connection signal="body_entered" from="Interactables/Runes/ShieldRune/Area2D" to="Interactables/Runes/ShieldRune" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Interactables/Runes/DamageRune/Area2D" to="Interactables/Runes/DamageRune" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Interactables/Runes/HealthRune/Area2D" to="Interactables/Runes/HealthRune" method="_on_area_2d_body_entered"]
-[connection signal="body_entered" from="Interactables/Runes/SpeedRune/Area2D" to="Interactables/Runes/SpeedRune" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Interactables/Runes/Rune/Area2D" to="Interactables/Runes/Rune" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Interactables/Runes/Rune2/Area2D" to="Interactables/Runes/Rune2" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Interactables/Runes/Rune3/Area2D" to="Interactables/Runes/Rune3" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Interactables/Runes/Rune4/Area2D" to="Interactables/Runes/Rune4" method="_on_area_2d_body_entered"]
+[connection signal="body_entered" from="Interactables/Boulders/Boulder/Area2D" to="Interactables/Boulders/Boulder" method="_on_area_2d_body_entered"]
