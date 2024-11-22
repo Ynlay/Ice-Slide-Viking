@@ -9,6 +9,10 @@ extends CharacterBody2D
 @export_category("Controls")
 @export var AltKeys = false 
 
+@export_category("Effects")
+@onready var EffectOnCharacter = $EffectOnCharacter
+@onready var EffectSideOfCharacter = $EffectSideOfCharacter
+
 @onready var anim = $Animations
 @onready var isAttacking = false 
 @onready var combatController = $CombatController
@@ -18,6 +22,9 @@ var flipped_horizontal = false
 var runeAcquired = false 
 
 func _ready(): 
+	EffectOnCharacter.visible = false 
+	EffectSideOfCharacter.visible = false
+	
 	platform_floor_layers = false
 	await get_tree().create_timer(1.0).timeout
 	if AltKeys: 
@@ -55,9 +62,11 @@ func HandleMovement(delta):
 	if velocity.x < -VelocityBeforeFlip: 
 		anim.flip_h = true 
 		flipped_horizontal = true 
+		EffectSideOfCharacter.position = Vector2(20,10)
 	elif velocity.x > VelocityBeforeFlip: 
 		anim.flip_h = false
 		flipped_horizontal = false 
+		EffectSideOfCharacter.position = Vector2(-20,10)
 		
 	# Animation handling 
 	if isAttacking: return
@@ -76,25 +85,35 @@ func SetDamageMultiplierRune(_multiplier, _duration):
 	combatController.DamageMultiplier = _multiplier
 	runeAcquired = true 
 	print("DamageRuneAcquired")
+	EffectOnCharacter.visible = true
+	EffectOnCharacter.animation = "DamageAura"
+	EffectOnCharacter.play()
 	await get_tree().create_timer(_duration).timeout
 	runeAcquired = false 
 	print("DamageRune effects fade")
 	combatController.DamageMultiplier = pastDamage
+	EffectOnCharacter.visible = false
 	
 func SetSpeedRune(_multiplier, _duration): 
 	if runeAcquired: return
 	var pastSpeed = Speed
 	Speed = Speed * _multiplier
 	runeAcquired = true
+	EffectSideOfCharacter.visible = true
+	EffectSideOfCharacter.play()
 	await get_tree().create_timer(_duration).timeout
 	runeAcquired = false 
 	Speed = pastSpeed
+	EffectSideOfCharacter.visible = false
 	
 func SetRegenRune(_healAmount, _duration): 
 	if runeAcquired: return 
 	var healTick = _healAmount/_duration
 	var elapsed_time = 0.0  # Track how much time has passed
 	runeAcquired = true
+	EffectOnCharacter.visible = true
+	EffectOnCharacter.animation = "HealthAura"
+	EffectOnCharacter.play()
 	while elapsed_time < _duration:
 		# Heal the player
 		combatController.HealthBar.value = combatController.HealthBar.value + healTick
@@ -103,14 +122,20 @@ func SetRegenRune(_healAmount, _duration):
 		await get_tree().create_timer(1.0).timeout
 	
 	runeAcquired = false 
+	EffectOnCharacter.visible = false
+	
 
 func SetShieldRune(_value, _duration): 
 	if runeAcquired: return 
 	runeAcquired = true 
 	combatController.invincible = true 
+	EffectOnCharacter.visible = true
+	EffectOnCharacter.animation = "ShieldAura"
+	EffectOnCharacter.play()
 	await get_tree().create_timer(_duration).timeout
 	runeAcquired = false 
 	combatController.invincible = false 
+	EffectOnCharacter.visible = false
 
 func Pushback(block_position, force): 
 	var direction = (global_transform.origin - block_position).normalized()
