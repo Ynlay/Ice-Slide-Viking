@@ -16,49 +16,45 @@ extends CharacterBody2D
 @onready var anim = $Animations
 @onready var isAttacking = false 
 @onready var combatController = $CombatController
+var current_animation 
 
 var last_direction = Vector2.ZERO
 var flipped_horizontal = false 
 var runeAcquired = false 
+var is_local = false 
 
 func _ready(): 
 	EffectOnCharacter.visible = false 
 	EffectSideOfCharacter.visible = false
 	
 	platform_floor_layers = false
-	await get_tree().create_timer(1.0).timeout
-	if AltKeys: 
-		combatController.AltKeys = true
+	#await get_tree().create_timer(1.0).timeout
+	#if AltKeys: 
+		#combatController.AltKeys = true
 func _physics_process(delta):
-	HandleMovement(delta)
-	
-	if Input.is_action_just_pressed("escape"):
-		get_tree().quit()
+	if is_local: 
+		HandleMovement(delta)
+		send_movement_update()
+		if Input.is_action_just_pressed("escape"):
+			get_tree().quit()
 	
 	move_and_slide()
 	
 func HandleMovement(delta): 
 	# Get Direction
 	var input_direction = Input.get_vector("left", "right", "up", "down")
-	if AltKeys: 
-		input_direction = Input.get_vector("altLeft", "altRight", "altUp", "altDown")
+	#if AltKeys: 
+		#input_direction = Input.get_vector("altLeft", "altRight", "altUp", "altDown")
 	if input_direction != Vector2.ZERO: 
 		last_direction = input_direction
 		
-	# Constant static speed
-	#velocity = last_direction * Speed  
-	
 	# Acceleration / Deceleration
 	if input_direction != Vector2.ZERO: 
-		velocity = velocity.move_toward(input_direction * Speed, (Acceleration)*delta)
+		velocity = velocity.move_toward(input_direction * Speed, Acceleration * delta)
 	else:
 		velocity = velocity.move_toward(Vector2.ZERO, (Deceleration*0.5) * delta)
 		
 	# Flip Sprite
-	#if last_direction == Vector2.LEFT or (velocity.x < -50): 
-		#anim.flip_h = true
-	#elif last_direction == Vector2.RIGHT or (velocity.x > 50): 
-		#anim.flip_h = false
 	if velocity.x < -VelocityBeforeFlip: 
 		anim.flip_h = true 
 		flipped_horizontal = true 
@@ -71,9 +67,39 @@ func HandleMovement(delta):
 	# Animation handling 
 	if isAttacking: return
 	if velocity != Vector2.ZERO: 
-		anim.play("Slide")
+		play_animation("Slide")
 	else: 
-		anim.play("Idle")
+		play_animation("Idle")
+
+func play_animation(animation_name): 
+	if current_animation == animation_name: return
+	current_animation = animation_name
+	anim.play(animation_name)
+	if is_local and NakamaManager.match_id != "":
+		var data = {
+			"action": "animate", 
+			"user_id": NakamaManager.session.user_id,
+			"animation": animation_name
+		}
+		NakamaManager.socket.send_match_state_async(NakamaManager.match_id, 2, JSON.stringify(data))
+
+func send_movement_update(): 
+	if NakamaManager.match_id != "":
+		var data = {
+			"action": "move",
+			"user_id": NakamaManager.session.user_id,
+			"position": global_position
+		}
+		NakamaManager.socket.send_match_state_async(NakamaManager.match_id, 1, JSON.stringify(data))
+
+func set_as_local(): 
+	is_local = true
+
+func update_position(new_position): 
+	global_position = new_position
+
+func play_remote_animation(animation_name): 
+	play_animation(animation_name)
 
 func SetIsAttacking(_attacking): 
 	isAttacking = _attacking

@@ -1,6 +1,6 @@
 [gd_scene load_steps=53 format=3 uid="uid://ddlxqb2tw3ppk"]
 
-[ext_resource type="PackedScene" uid="uid://dlo34b387r23p" path="res://Scenes/VikingPlayer.tscn" id="1_5mcxl"]
+[ext_resource type="Script" path="res://Scenes/NakamaLevel.gd" id="1_j3ek3"]
 [ext_resource type="Texture2D" uid="uid://bbg8xx2irbq7" path="res://Assets/VikingAssets/pvp-arena.png" id="3_giewk"]
 [ext_resource type="Texture2D" uid="uid://dye4tc3hgwxjt" path="res://Assets/VikingAssets/Ice and snow tileset-Sheet-Sheet.png" id="3_uhfqn"]
 [ext_resource type="Script" path="res://Scripts/Rune.gd" id="4_v0nne"]
@@ -2642,6 +2642,7 @@ animations = [{
 }]
 
 [node name="Level1" type="Node2D"]
+script = ExtResource("1_j3ek3")
 
 [node name="Pvp-arena" type="Sprite2D" parent="."]
 texture = ExtResource("3_giewk")
@@ -2834,19 +2835,6 @@ position = Vector2(1.5, -314)
 rotation = 1.5708
 shape = SubResource("RectangleShape2D_44cqu")
 
-[node name="VikingPlayer" parent="." instance=ExtResource("1_5mcxl")]
-position = Vector2(138, -63)
-Speed = 100
-Acceleration = 150
-Deceleration = 100
-
-[node name="VikingPlayer2" parent="." instance=ExtResource("1_5mcxl")]
-position = Vector2(336, -33)
-Speed = 100
-Acceleration = 150
-Deceleration = 100
-AltKeys = true
-
 [node name="TileMap" type="TileMap" parent="."]
 tile_set = SubResource("TileSet_b7cl4")
 format = 2
@@ -2932,6 +2920,8 @@ position = Vector2(-243, 103)
 
 [node name="Boulder4" parent="Interactables/Boulders" instance=ExtResource("6_o6wb0")]
 position = Vector2(-72, -202)
+
+[node name="Players" type="Node2D" parent="."]
 
 [connection signal="body_entered" from="Interactables/Runes/ShieldRune/Area2D" to="Interactables/Runes/ShieldRune" method="_on_area_2d_body_entered"]
 [connection signal="body_entered" from="Interactables/Runes/DamageRune/Area2D" to="Interactables/Runes/DamageRune" method="_on_area_2d_body_entered"]
