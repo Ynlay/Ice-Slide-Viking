@@ -26,6 +26,7 @@ func login_guest(matchmaking_label: Label):
 	if session.is_valid():
 		print("Logged in successfully! User ID: ", session.user_id)
 		matchmaking_label.text = "Logged in successfully! User ID: %s" % session.user_id
+		matchmaking_label.text += "\nSearching for Match..."
 		connect_socket()
 	else:
 		print("Login failed!")
@@ -54,33 +55,26 @@ func find_match():
 		print("❌ ERROR: Matchmaker request failed!")
 
 func _on_matchmaker_matched(matched_data: NakamaRTAPI.MatchmakerMatched):
-	if matched_data.users.size() < 2: 
-		print("Not Enough players in match! Waiting for more players...")
-		return 
+	print("Matchmaker found a match! Full Data: ", matched_data)
+
+	# ✅ Store all known players BEFORE joining
+	players_in_match.clear()
 	for player in matched_data.users:
-		print("👤 Player Username: ", player.presence.username, " User ID: ", player.presence.user_id)
-		
-	# ✅ Wait before joining the match to allow both players to be registered
+		players_in_match[player.presence.user_id] = player.presence.username
+		print("👤 Player in match before joining: ", player.presence.username, " (", player.presence.user_id, ")")
+
+	# ✅ Wait before joining to allow players to register
 	await get_tree().create_timer(2.0).timeout
-	
+
 	var joined_match: NakamaRTAPI.Match = await socket.join_matched_async(matched_data)
-	print("🆔 Joined match response: ", joined_match)
 	match_id = joined_match.match_id
+	print("🆔 Joined match response: ", joined_match)
 	
-	# 🚀 Check how many players are in the match
-	print("👥 Players in match: ", joined_match.presences.size())
-	for player in joined_match.presences:
-		print("👤 Player: ", player.username, " (", player.user_id, ")")
-	
-	print("👥 Waiting for players to join match...")
-
 func _on_match_presence(match_presence: NakamaRTAPI.MatchPresenceEvent):
-	print("🔹 Match Presence Update: ", match_presence)
-
 	for presence in match_presence.joins:
 		players_in_match[presence.user_id] = presence.username
 		print("✅ Player joined: ", presence.username, " (", presence.user_id, ")")
-
+		
 	for presence in match_presence.leaves:
 		players_in_match.erase(presence.user_id)
 		print("❌ Player left: ", presence.username, " (", presence.user_id, ")")
@@ -91,12 +85,3 @@ func _on_match_presence(match_presence: NakamaRTAPI.MatchPresenceEvent):
 		print("🚀 Enough players joined! Starting match...")
 		await get_tree().create_timer(0.5).timeout
 		get_tree().change_scene_to_file("res://Scenes/Level1.tscn")
-	
-func send_spawn_request():
-	var data = {"action": "spawn", "user_id": session.user_id}
-	var op_code = 0
-	var result = socket.send_match_state_async(match_id, op_code, JSON.stringify(data))
-	if result is NakamaException:
-		print("Failed to send spawn request: ", result.message)
-	else: 
-		print("Spawn request sent successfully.")

@@ -55,10 +55,11 @@ func _ready() -> void:
 	rng = RandomNumberGenerator.new()
 	
 func _physics_process(delta: float) -> void:
-	HandleWhirlwind()
-	HandleAxeStrike()
-	HandleBlocking()
-	HandleAttack()
+	if playerController.is_local:
+		HandleWhirlwind()
+		HandleAxeStrike()
+		HandleBlocking()
+		HandleAttack()
 	
 	if playerController.flipped_horizontal: 
 		axeStrikeArea.position = Vector2(-18,0)
@@ -79,7 +80,7 @@ func HandleWhirlwind():
 		AudioController.stream = WhirlwindAudio[rng.randf_range(0, WhirlwindAudio.size())]
 		AudioController.play()
 		playerController.SetIsAttacking(true)
-		anim.play("Whirlwind")
+		playerController.play_animation("Whirlwind")
 		attackDue = WhirlwindDamagePerTick * DamageMultiplier
 		attacking = true
 		await get_tree().create_timer(WhirlwindDuration).timeout
@@ -105,7 +106,7 @@ func HandleAxeStrike():
 		AudioController.stream = AxeStrikeAudio[rng.randf_range(0, AxeStrikeAudio.size())]
 		AudioController.play()
 		playerController.SetIsAttacking(true)
-		anim.play("AxeStrike")
+		playerController.play_animation("AxeStrike")
 		attackDue = AxeStrikeDamage * DamageMultiplier
 		attacking = true
 		await get_tree().create_timer(AxeStrikeDuration).timeout
@@ -143,9 +144,7 @@ func HandleAttack():
 		attackingBody.combatController.HandleDamage(attackDue, lastAttack, playerController)
 		
 func HandleDamage(damageReceived, strikeType, attacker): 
-	if damageReceived < 0: return 
-	if recentlyDamaged: return
-	if strikeType == "none": return
+	if damageReceived < 0 or recentlyDamaged or strikeType == "none": return 
 	# Parry/Block Mechanic
 	#if attacker.attacking and playerController.attacking: damageReceived = 0
 	# Check blocking 
@@ -157,12 +156,14 @@ func HandleDamage(damageReceived, strikeType, attacker):
 	match(strikeType):
 		"Whirlwind": DamageHealth(damageReceived, DamageInvincibilityTimerWhirlwind)
 		"AxeStrike": DamageHealth(damageReceived, DamageInvincibilityTimerAxeStrike)
-			
-func DamageHealth(value, invincibilityTimer):
+	
+func DamageHealth(value, invincibilityTimer = 1):
+	if (recentlyDamaged): return
 	DamageNumbers.DisplayNumber(value, playerController.global_position, false)
 	HealthBar.value = HealthBar.value - value 
+	playerController.send_health_update(playerController.name, HealthBar.value)
 	recentlyDamaged = true 
-	await get_tree().create_timer(invincibilityTimer).timeout
+	await get_tree().create_timer(float(invincibilityTimer)).timeout
 	recentlyDamaged = false
 	
 func _on_axe_strike_area_body_entered(body: Node2D) -> void:

@@ -88,12 +88,26 @@ func send_movement_update():
 		var data = {
 			"action": "move",
 			"user_id": NakamaManager.session.user_id,
-			"position": global_position
+			"position_x": global_position.x,
+			"position_y": global_position.y,
+			"velocity_x": velocity.x
 		}
 		NakamaManager.socket.send_match_state_async(NakamaManager.match_id, 1, JSON.stringify(data))
 
+func send_health_update(remote_player_id, value): 
+	if NakamaManager.match_id != "":
+		var data = {
+			"action": "health", 
+			"user_id": NakamaManager.session.user_id,
+			"remote_player_id": remote_player_id,
+			"health_value": value
+		}
+		NakamaManager.socket.send_match_state_async(NakamaManager.match_id, 3, JSON.stringify(data))
+
 func set_as_local(): 
 	is_local = true
+	var camera = $Camera2D
+	camera.make_current()
 
 func update_position(new_position): 
 	global_position = new_position
