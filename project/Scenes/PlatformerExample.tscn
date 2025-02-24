@@ -1,0 +1,161 @@
+[gd_scene load_steps=7 format=3 uid="uid://cl80073qqmbk6"]
+
+[ext_resource type="PackedScene" uid="uid://c0y0177mo13xy" path="res://Scenes/VikingPlayerPlatformer.tscn" id="2_pe836"]
+[ext_resource type="Texture2D" uid="uid://dye4tc3hgwxjt" path="res://Assets/VikingAssets/Ice and snow tileset-Sheet-Sheet.png" id="2_y3wv5"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_w4usp"]
+atlas = ExtResource("2_y3wv5")
+region = Rect2(8, 16, 8, 8)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_86fqn"]
+atlas = ExtResource("2_y3wv5")
+region = Rect2(1, 0, 25, 48)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_fh8f6"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_w4usp")
+}],
+"loop": true,
+"name": &"ground",
+"speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_86fqn")
+}],
+"loop": true,
+"name": &"wall",
+"speed": 5.0
+}]
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_gvhev"]
+size = Vector2(446.5, 108.5)
+
+[node name="Level1" type="Node2D"]
+
+[node name="Map" type="Node2D" parent="."]
+z_index = -1
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="Map"]
+modulate = Color(0.545098, 0.545098, 0.545098, 1)
+position = Vector2(193, 135)
+scale = Vector2(48.375, 33.375)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"ground"
+
+[node name="Walls" type="Node2D" parent="Map"]
+
+[node name="Wall" type="AnimatedSprite2D" parent="Map/Walls"]
+position = Vector2(58, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall2" type="AnimatedSprite2D" parent="Map/Walls"]
+position = Vector2(176, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall3" type="AnimatedSprite2D" parent="Map/Walls"]
+position = Vector2(293, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall4" type="AnimatedSprite2D" parent="Map/Walls"]
+position = Vector2(386, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Map/Walls"]
+position = Vector2(0, 3)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Walls/StaticBody2D2"]
+position = Vector2(220.75, -52.75)
+shape = SubResource("RectangleShape2D_gvhev")
+
+[node name="Walls2" type="Node2D" parent="Map"]
+position = Vector2(0, 319)
+
+[node name="Wall" type="AnimatedSprite2D" parent="Map/Walls2"]
+position = Vector2(58, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall2" type="AnimatedSprite2D" parent="Map/Walls2"]
+position = Vector2(176, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall3" type="AnimatedSprite2D" parent="Map/Walls2"]
+position = Vector2(293, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall4" type="AnimatedSprite2D" parent="Map/Walls2"]
+position = Vector2(386, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="StaticBody2D" type="StaticBody2D" parent="Map/Walls2"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Walls2/StaticBody2D"]
+position = Vector2(220.75, -52.75)
+shape = SubResource("RectangleShape2D_gvhev")
+
+[node name="Walls3" type="Node2D" parent="Map"]
+position = Vector2(-3, 330)
+rotation = -1.5708
+
+[node name="Wall2" type="AnimatedSprite2D" parent="Map/Walls3"]
+position = Vector2(176, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall3" type="AnimatedSprite2D" parent="Map/Walls3"]
+position = Vector2(293, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="StaticBody2D2" type="StaticBody2D" parent="Map/Walls3"]
+position = Vector2(11, 2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Walls3/StaticBody2D2"]
+position = Vector2(220.75, -52.75)
+shape = SubResource("RectangleShape2D_gvhev")
+
+[node name="Walls4" type="Node2D" parent="Map"]
+position = Vector2(486, 330)
+rotation = -1.5708
+
+[node name="Wall2" type="AnimatedSprite2D" parent="Map/Walls4"]
+position = Vector2(176, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="Wall3" type="AnimatedSprite2D" parent="Map/Walls4"]
+position = Vector2(293, -64)
+scale = Vector2(4.73375, 3.0625)
+sprite_frames = SubResource("SpriteFrames_fh8f6")
+animation = &"wall"
+
+[node name="StaticBody2D3" type="StaticBody2D" parent="Map/Walls4"]
+position = Vector2(11, -2)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Map/Walls4/StaticBody2D3"]
+position = Vector2(220.75, -52.75)
+shape = SubResource("RectangleShape2D_gvhev")
+
+[node name="VikingPlayer" parent="." instance=ExtResource("2_pe836")]
+position = Vector2(79, 49)
